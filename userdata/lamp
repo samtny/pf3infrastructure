@@ -1,0 +1,14 @@
+# docker
+
+mkfs -t ext4 /dev/xvdf
+sh -c 'echo "/dev/xvdf /mnt ext4 defaults 0 0" >> /etc/fstab'
+mount -a
+
+mv /home /mnt
+mv /var /mnt
+mkdir -p /home
+mkdir -p /var
+sh -c 'echo "/mnt/home /home bind bind,nobootwait 0 0" >> /etc/fstab'
+sh -c 'echo "/mnt/var /var bind bind,nobootwait 0 0" >> /etc/fstab'
+mount /home
+mount /var
