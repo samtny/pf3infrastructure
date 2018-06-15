@@ -1,4 +1,4 @@
-# docker
+# mount /home, /var
 
 mkfs -t ext4 /dev/xvdf
 sh -c 'echo "/dev/xvdf /mnt ext4 defaults 0 0" >> /etc/fstab'
