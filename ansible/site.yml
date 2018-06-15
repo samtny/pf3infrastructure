@@ -1,0 +1,19 @@
+- name: apply common configuration to all nodes
+  hosts: all
+  become: true
+  pre_tasks:
+    - apt: update_cache=yes
+  roles:
+    - common
+
+- name: configure and deploy lamp
+  hosts: lamp
+  become: true
+  roles:
+    - common
+    - pf3server
+  vars_files:
+    - ../config/config.ec2.yml
+    - ../credentials.yml
+  tags:
+      - lamp

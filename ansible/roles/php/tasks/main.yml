@@ -1,0 +1,32 @@
+---
+- name: Install php
+  apt: name={{ item }} state=present
+  notify:
+    - Restart php
+    - Restart apache
+  with_items:
+    - php7.2-fpm
+    - libapache2-mod-php7.2
+    - php7.2-fpm
+    - php7.2-cli
+    - php7.2-curl
+    - php7.2-mysql
+    - php7.2-sqlite3
+    - php7.2-gd
+    - php-pear
+    - php7.2-dev
+    - build-essential
+    - checkinstall
+    - php7.2-mbstring
+    - php7.2-dom
+
+- name: Ensure php.ini
+  template: src=php.ini.j2 dest=/etc/php/7.2/fpm/php.ini owner=root group=root mode=0644
+  notify: Restart php
+
+- name: Ensure www.conf
+  template: src=www.conf.j2 dest=/etc/php/7.2/fpm/pool.d/www.conf owner=root group=root mode=0644
+  notify: Restart php
+
+- name: Ensure php7.2-fpm state
+  service: name=php7.2-fpm state=started

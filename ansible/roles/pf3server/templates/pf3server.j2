@@ -1,0 +1,73 @@
+server {
+	listen 80 default_server;
+	#ssl on;
+	#ssl_certificate /opt/photos_api/ssl/server.crt;
+	#ssl_certificate_key /opt/photos_api/ssl/server.key;
+
+	root {{ pf3server_docroot }};
+	index index.php;
+
+	server_name *.pf3server.com localhost;
+
+    gzip                on;
+    gzip_buffers        16 8k;
+    gzip_http_version   1.0;
+    gzip_types          text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+
+	location /favicon.ico {
+		return 204;
+		access_log	off;
+		log_not_found	off;
+	}
+
+	location / {
+	    try_files $uri $uri/ /index.php?$query_string;
+	}
+
+	location /resources|/resource_list|/folders|/folder_list {
+		rewrite ^ /index.php;
+	}
+
+	location ~ \.php$ {
+	if ($request_method = 'OPTIONS') {
+                    add_header 'Access-Control-Allow-Origin' 'http://local.pf3admin.com' always;
+                    #
+                    # Om nom nom cookies
+                    #
+                    add_header 'Access-Control-Allow-Credentials' 'true' always;
+                    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                    #
+                    # Custom headers and headers various browsers *should* be OK with but aren't
+                    #
+                    add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,X-HTTP-Method-Override';
+                    #
+                    # Tell client that this pre-flight info is valid for 20 days
+                    #
+                    add_header 'Access-Control-Max-Age' 1728000;
+                    add_header 'Content-Type' 'text/plain charset=UTF-8';
+                    add_header 'Content-Length' 0;
+                    return 204;
+                 }
+                 if ($request_method = 'POST') {
+                    add_header 'Access-Control-Allow-Origin' 'http://local.pf3admin.com' always;
+                    add_header 'Access-Control-Allow-Credentials' 'true' always;
+                    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                    add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,X-HTTP-Method-Override';
+                 }
+                 if ($request_method = 'GET') {
+                    add_header 'Access-Control-Allow-Origin' 'http://local.pf3admin.com' always;
+                    add_header 'Access-Control-Allow-Credentials' 'true' always;
+                    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                    add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+                 }
+
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+
+		# With php7.1-fpm:
+		fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+		fastcgi_index index.php;
+		fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		include fastcgi_params;
+	}
+}

@@ -1,0 +1,7 @@
+---
+dependencies:
+  - { role: php }
+  - { role: xdebug }
+  - { role: composer }
+  - { role: mysql }
+  - { role: apache }

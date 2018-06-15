@@ -1,0 +1,31 @@
+---
+
+pf3server_url: www.pinballfinder.org
+pf3server_runmode: production
+pf3server_docroot: /var/www/pf3server
+pf3server_ssl: /home/ubuntu/credentials
+pf3server_gamedict_path: /var/www/pf3server/gamedict.txt
+pf3server_log_directory: /home/ubuntu/log
+
+pf3server_deploy_host: www.pinballfinder.org
+pf3server_deploy_user: ubuntu
+
+pf3server_db_name: pf3_server
+
+php_pm_max_children: 50
+php_pm_start_servers: 5
+php_pm_min_spare_servers: 5
+php_pm_max_spare_servers: 35
+
+php_fpm_user: www-data
+php_fpm_group: www-data
+php_memory_limit: 128M
+php_upload_max_filesize: 20M
+php_post_max_size: 32M
+php_cgi_fix_pathinfo: 0
+php_realpath_cache_size: 4096k
+php_opcache_enable: 1
+php_opcache_memory_consumption: 64
+php_opcache_interned_strings_buffer: 16
+php_opcache_max_accelerated_files: 16228
+php_opcache_validate_timestamps: 1

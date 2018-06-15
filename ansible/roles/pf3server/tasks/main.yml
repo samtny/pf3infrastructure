@@ -1,0 +1,28 @@
+---
+- name: Create pf3server_docroot
+  file: path={{ pf3server_docroot }} state=directory owner=vagrant group=vagrant mode=0775
+
+- name: Create pf3server_private
+  file: path={{ pf3server_ssl }} state=directory owner=vagrant group=vagrant mode=0700
+
+- name: Create pf3server database
+  mysql_db: name={{ pf3server_db_name }} state=present collation="utf8_general_ci" encoding="utf8"
+
+- name: Create pf3server database user
+  mysql_user: name={{ pf3server_db_user }} password={{ pf3server_db_password }} priv="{{ pf3server_db_name }}.*:ALL" state=present
+
+#- name: Create pf3server vhost file
+#  template: src=pf3server.j2 dest=/etc/nginx/sites-available/pf3server owner=root group=root mode=0644
+#  notify: Reload nginx
+
+#- name: Enable pf3server vhost
+#  file: src=/etc/nginx/sites-available/pf3server dest=/etc/nginx/sites-enabled/pf3server state=link owner=root group=root mode=0644
+#  notify: Reload nginx
+
+- name: Create pf3server vhost entry
+  template: src=pf3server.conf.j2 dest=/etc/apache2/sites-available/pf3server.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Enable site vhost
+  file: src=../sites-available/pf3server.conf dest=/etc/apache2/sites-enabled/pf3server.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
