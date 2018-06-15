@@ -12,3 +12,7 @@ sh -c 'echo "/mnt/home /home bind bind,nobootwait 0 0" >> /etc/fstab'
 sh -c 'echo "/mnt/var /var bind bind,nobootwait 0 0" >> /etc/fstab'
 mount /home
 mount /var
+
+# python
+
+sudo apt-get -y install python-minimal
