@@ -24,11 +24,13 @@ THIS_IP_PROVIDER=ipinfo.io/ip
 
 CIDR_BLOCK_THIS="$(curl -s $THIS_IP_PROVIDER)/32"
 
-AVAILABILITY_ZONE_PRIVATE="us-east-1b"
-AVAILABILITY_ZONE_PUBLIC="us-east-1b"
+AVAILABILITY_ZONE_PRIVATE="us-east-1a"
+AVAILABILITY_ZONE_PUBLIC="us-east-1a"
+AVAILABILITY_ZONE_PUBLIC_ALT="us-east-1b"
 
 echo -e "aws_AvailabilityZonePrivate:\t$AVAILABILITY_ZONE_PRIVATE"
 echo -e "aws_AvailabilityZonePublic:\t$AVAILABILITY_ZONE_PUBLIC"
+echo -e "aws_AvailabilityZonePublicAlt:\t$AVAILABILITY_ZONE_PUBLIC_ALT"
 
 TAGS="Key=Project,Value=$PROJECT Key=Name,Value=$PROJECT"
 
@@ -52,6 +54,9 @@ echo -e "aws_SubnetIdPrivate:\t$SUBNET_ID_PRIVATE"
 
 SUBNET_ID_PUBLIC=$(./subnets-create.sh $(echo $PROJECT)-public $VPC_ID $CIDR_BLOCK_PUBLIC $AVAILABILITY_ZONE_PUBLIC | grep aws_SubnetId | cut -f2)
 echo -e "aws_SubnetIdPublic:\t$SUBNET_ID_PUBLIC"
+
+SUBNET_ID_PUBLIC_ALT=$(./subnets-create.sh $(echo $PROJECT)-public-alt $VPC_ID $CIDR_BLOCK_PUBLIC $AVAILABILITY_ZONE_PUBLIC_ALT | grep aws_SubnetId | cut -f2)
+echo -e "aws_SubnetIdPublicAlt:\t$SUBNET_ID_PUBLIC_ALT"
 
 # security groups
 
@@ -154,6 +159,7 @@ ROUTE_TABLE_ID_PUBLIC=$(./routetables-create.sh $PROJECT-public $VPC_ID | grep a
 echo -e "aws_RouteTableIdPublic:\t$ROUTE_TABLE_ID_PUBLIC"
 
 aws ec2 associate-route-table --subnet-id $SUBNET_ID_PUBLIC --route-table-id $ROUTE_TABLE_ID_PUBLIC >/dev/null 
+aws ec2 associate-route-table --subnet-id $SUBNET_ID_PUBLIC_ALT --route-table-id $ROUTE_TABLE_ID_PUBLIC >/dev/null
 
 aws ec2 create-route --route-table-id $ROUTE_TABLE_ID_PUBLIC --destination-cidr-block 0.0.0.0/0 --gateway-id $GATEWAY_ID >/dev/null 
 

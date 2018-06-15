@@ -47,6 +47,6 @@ echo -e "aws_InstanceId:\t$INSTANCE_ID"
 
 aws ec2 create-tags --resources $INSTANCE_ID --tags Key=Project,Value=$PROJECT Key=Environment,Value=$ENVIRONMENT Key=Service,Value=$SERVICE Key=Name,Value=$PROJECT-$ENVIRONMENT-$SERVICE >/dev/null
 
-[ "$ELB_NAME" != "" ] && aws elb register-instances-with-load-balancer --load-balancer-name $ELB_NAME --instances $INSTANCE_ID >/dev/null
+#[ "$ELB_NAME" != "" ] && aws elb register-instances-with-load-balancer --load-balancer-name $ELB_NAME --instances $INSTANCE_ID >/dev/null
 
 exit 0
