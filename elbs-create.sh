@@ -20,11 +20,11 @@ TARGET_GROUP_ARN=$6
 
 ELB_NAME="$PROJECT-$ENVIRONMENT-$SERVICE"
 
-TAGS="'Key=Project,Value=$PROJECT Key=Environment,Value=$ENVIRONMENT Key=Service,Value=$SERVICE'"
+TAGS="Key=Project,Value=$PROJECT Key=Environment,Value=$ENVIRONMENT Key=Service,Value=$SERVICE"
 
 aws elbv2 create-load-balancer --name ${ELB_NAME} --subnets ${SUBNET_IDS} --security-groups ${SECURITY_GROUP_IDS} --tags ${TAGS} >/dev/null
 
-ELB_ARN="$(aws elbv2 describe-load-balancers --names ${ELB_NAME} --output text | grep LoadBalancerArn | cut -f3)"
+ELB_ARN="$(aws elbv2 describe-load-balancers --names ${ELB_NAME} --output text | grep LOADBALANCERS | cut -f6)"
 
 aws elbv2 create-listener --load-balancer-arn ${ELB_ARN} --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=${TARGET_GROUP_ARN}
 

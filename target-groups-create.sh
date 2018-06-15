@@ -23,9 +23,9 @@ aws elbv2 create-target-group --name ${TARGET_GROUP_NAME} --protocol HTTP --port
 
 TARGET_GROUP_ARN="$(aws elbv2 describe-target-groups --names ${TARGET_GROUP_NAME} --output text | grep TARGETGROUPS | cut -f10)"
 
-echo -e "aws_TargetGroupArn:\t${TARGET_GROUP_ARN}"
-
 [ "$TARGET_IDS" != "" ] && aws elbv2 register-targets --target-group-arn ${TARGET_GROUP_ARN} --targets Id=${TARGET_IDS}
+
+echo -e "aws_TargetGroupArn:\t${TARGET_GROUP_ARN}"
 
 echo -e "aws_TargetGroupName:\t${TARGET_GROUP_NAME}"
 
