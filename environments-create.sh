@@ -41,7 +41,7 @@ SECURITY_GROUP_ID_LAMP=$(echo "$VPC_DATA" | grep "aws_SecurityGroupIdLamp" | cut
 
 # instances
 
-INSTANCE_ID_LAMP=$(bash instances-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${SECURITY_GROUP_ID_LAMP} ${SUBNET_ID_PRIVATE} "" ${EC2_INSTANCE_TYPE_DEFAULT} ${EC2_AMI_DEFAULT} '--block-device-mappings [{"DeviceName":"/dev/xvdf","Ebs":{"VolumeSize":80}}]' | grep "aws_InstanceId" | cut -f2)
+INSTANCE_ID_LAMP=$(bash instances-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${SECURITY_GROUP_ID_LAMP} ${SUBNET_ID_PRIVATE} "" "t2.medium" ${EC2_AMI_DEFAULT} '--block-device-mappings [{"DeviceName":"/dev/xvdf","Ebs":{"VolumeSize":80}}]' | grep "aws_InstanceId" | cut -f2)
 echo -e "aws_InstanceIdLamp:\t$INSTANCE_ID_LAMP"
 
 # elb target groups

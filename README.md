@@ -26,7 +26,8 @@ The scripts provided here will bring up Amazon EC2 resources as follows;
 ### CREATING A NEW ENVIRONMENT:
 1. Execute './environments-create.sh myproject prod', optionally replacing 'prod' with the environment name you would prefer ('stage/uat').
 1. Wait a minute to let the EC2 instances initialize.
-1. Execute the jump script './jump.sh myproject prod lamp'.  You should be looking at a command prompt on the LAMP instance.
+1. Execute './provision myproject prod lamp' to provision the LAMP instance.
+1. Execute the jump script './jump.sh myproject prod lamp'.  You should be looking at a command prompt on the provisioned LAMP instance.
 
 ### ENVIRONMENT TEARDOWN:
 

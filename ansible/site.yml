@@ -7,7 +7,7 @@
     - common
 
 - name: configure and deploy lamp
-  hosts: lamp
+  hosts: tag_Service_lamp
   become: true
   roles:
     - common

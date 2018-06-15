@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 USAGE="Usage: provision.sh [project] [environment] [service]"
 
