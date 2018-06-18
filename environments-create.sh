@@ -36,8 +36,11 @@ SECURITY_GROUP_ID_LAMP=$(echo "$VPC_DATA" | grep "aws_SecurityGroupIdLamp" | cut
 
 # s3 buckets
 
-#BUCKET_NAME_DUMMY=$(bash s3-create.sh ${ENVIRONMENT} dummy | grep aws_BucketName | cut -f2)
-#echo -e "aws_BucketNameDummy:\t$BUCKET_NAME_DUMMY"
+INSTANCE_PROFILE_NAME_LAMP=$(bash instance-profile-create.sh ${PROJECT} ${ENVIRONMENT} lamp | grep aws_InstanceProfileName | cut -f2)
+echo -e "aws_InstanceProfileNameLamp:\t$INSTANCE_PROFILE_NAME_LAMP"
+
+BUCKET_NAME_LAMP=$(bash buckets-create.sh ${PROJECT} ${ENVIRONMENT} lamp | grep aws_BucketName | cut -f2)
+echo -e "aws_BucketNameLamp:\t$BUCKET_NAME_LAMP"
 
 # instances
 
