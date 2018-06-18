@@ -1,0 +1,14 @@
+<VirtualHost *:80>
+    ServerName  www.pinballfinder.org
+    ServerAlias web-prod-lamp-559021583.us-east-1.elb.amazonaws.com
+
+    ServerAdmin pinfinderapp@www.pinballfinder.org
+
+    #DocumentRoot /var/www
+
+    Alias /pf3/ /var/www/pf3/
+
+    <Directory /var/www/pf3>
+        AllowOverride All
+    </Directory>
+</VirtualHost>

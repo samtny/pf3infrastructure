@@ -11,7 +11,7 @@
   become: true
   roles:
     - common
-    - pf3server
+    - pf3
   vars_files:
     - ../config/config.ec2.yml
     - ../credentials.yml

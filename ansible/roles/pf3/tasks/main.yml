@@ -1,15 +1,18 @@
 ---
-- name: Create pf3server_docroot
+- name: Create pf3 docroot
   file: path={{ pf3server_docroot }} state=directory owner=ubuntu group=ubuntu mode=0775
 
-- name: Create pf3server_private
+- name: Create pf3 private
   file: path={{ pf3server_ssl }} state=directory owner=ubuntu group=ubuntu mode=0700
 
-- name: Create pf3server database
+- name: Create pf3 database
   mysql_db: name={{ pf3server_db_name }} state=present collation="utf8mb4_general_ci" encoding="utf8mb4"
 
-- name: Create pf3server database user
+- name: Create pf3 database user
   mysql_user: name={{ pf3server_db_user }} password={{ pf3server_db_password }} priv="{{ pf3server_db_name }}.*:ALL" state=present
+
+- name: Create pf3 cache folder
+  file: path={{ pf3server_docroot }}/cache state=directory owner=ubuntu group=www-data mode=0775
 
 #- name: Create pf3server vhost file
 #  template: src=pf3server.j2 dest=/etc/nginx/sites-available/pf3server owner=root group=root mode=0644
@@ -19,10 +22,10 @@
 #  file: src=/etc/nginx/sites-available/pf3server dest=/etc/nginx/sites-enabled/pf3server state=link owner=root group=root mode=0644
 #  notify: Reload nginx
 
-- name: Create pf3server vhost entry
-  template: src=pf3server.conf.j2 dest=/etc/apache2/sites-available/pf3server.conf owner=root group=root mode=0644
+- name: Create pf3 vhost entry
+  template: src=pf3.conf.j2 dest=/etc/apache2/sites-available/pf3.conf owner=root group=root mode=0644
   notify: Restart apache
 
 - name: Enable site vhost
-  file: src=../sites-available/pf3server.conf dest=/etc/apache2/sites-enabled/pf3server.conf state=link owner=root group=root mode=0644
+  file: src=../sites-available/pf3.conf dest=/etc/apache2/sites-enabled/pf3.conf state=link owner=root group=root mode=0644
   notify: Restart apache
