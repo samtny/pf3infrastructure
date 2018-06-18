@@ -1,4 +1,25 @@
 ---
+- name: Install unattended-upgrades
+  apt: name=unattended-upgrades state=latest update_cache=yes
+
+- name: Create /etc/apt/apt.conf.d/20auto-upgrades
+  template: src=20auto-upgrades.j2 dest=/etc/apt/apt.conf.d/20auto-upgrades owner=root group=root mode=0644
+
+- name: Install python-pip
+  apt: name=python-pip state=present
+
+- name: Install awscli
+  pip: name=awscli state=present
+
+- name: Ensure hostname in /etc/hosts
+  lineinfile: dest=/etc/hosts regexp="^127.0.0.1 {{ ansible_hostname }}" line="127.0.0.1 {{ ansible_hostname }}"
+
+- name: Ensure "LC_ALL=en_US.UTF-8" in /etc/environment
+  lineinfile: dest=/etc/environment regexp=^LC_ALL= line=LC_ALL=en_US.UTF-8
+
+- name: Ensure "LANG=en_US.UTF-8" in /etc/environment
+  lineinfile: dest=/etc/environment regexp=^LANG= line=LANG=en_US.UTF-8
+
 - name: Install vim
   apt: name=vim state=present
 

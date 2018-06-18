@@ -1,6 +1,4 @@
 ---
 dependencies:
-  - { role: php }
+  - { role: lamp }
   - { role: composer }
-  - { role: mysql }
-  - { role: apache }

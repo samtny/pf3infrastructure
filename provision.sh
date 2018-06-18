@@ -45,7 +45,7 @@ ANSIBLE_CONFIG_FILE="$WORKING_DIR/$RESOURCE_PREFIX.ansible.cfg"
 
 cat > ${ANSIBLE_CONFIG_FILE} <<- EOM
 [ssh_connection]
-ssh_args = -F "$WORKING_DIR/$RESOURCE_PREFIX.ssh_config"
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F "$WORKING_DIR/$RESOURCE_PREFIX.ssh_config"
 pipelining = True
 EOM
 
@@ -54,6 +54,6 @@ export ANSIBLE_CONFIG="$ANSIBLE_CONFIG_FILE"
 #ansible -i ec2.py -u ubuntu tag_Name_dp_test4_code -m ping -vvvv
 #python ec2.py --list --refresh-cache
 
-ansible-playbook -i "$WORKING_DIR/ec2.py" --extra-vars "Project=$PROJECT Environment=$ENVIRONMENT" --tags "$TAGS" ./ansible/site.yml -v
+ansible-playbook -i "$WORKING_DIR/ec2.py" --extra-vars "project=$PROJECT env=$ENVIRONMENT Project=$PROJECT Environment=$ENVIRONMENT" --tags "$TAGS" ./ansible/site.yml -v
 
 exit 0
