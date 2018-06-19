@@ -7,6 +7,14 @@
     - apache2-doc
     - libapache2-mod-php7.2
 
+- name: Create /etc/apache2/apache2.conf
+  template: src=apache2.conf.j2 dest=/etc/apache2/apache2.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /etc/apache2/mods-enabled/headers.load
+  file: src=../mods-available/headers.load dest=/etc/apache2/mods-enabled/headers.load state=link owner=root group=root mode=0644
+  notify: Restart apache
+
 #- name: Create /etc/apache2/conf-available/mpm-worker.conf
 #  template: src=mpm-worker.conf.j2 dest=/etc/apache2/conf-available/mpm-worker.conf owner=root group=root mode=0644
 #  notify: Restart apache
@@ -34,6 +42,22 @@
 #- name: Remove /etc/apache2/sites-enabled/000-default.conf
 #  file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
 
+- name: Create /etc/apache2/conf-available/security.conf
+  template: src=security.conf.j2 dest=/etc/apache2/conf-available/security.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /etc/apache2/conf-enabled/security.conf
+  file: src=../conf-available/security.conf dest=/etc/apache2/conf-enabled/security.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /etc/apache2/conf-available/pci.conf
+  template: src=pci.conf.j2 dest=/etc/apache2/conf-available/pci.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /etc/apache2/conf-enabled/pci.conf
+  file: src=../conf-available/pci.conf dest=/etc/apache2/conf-enabled/pci.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
+
 - name: Enable apache modules
   apache2_module: state=present name={{ item }}
   with_items:
@@ -42,6 +66,7 @@
     - actions
     - deflate
     - expires
+    - headers
   notify: Restart apache
 
 #- name: Set apache mime.types
