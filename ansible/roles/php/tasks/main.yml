@@ -38,5 +38,8 @@
   file: src=/etc/php/7.2/mods-available/memcached.ini dest=/etc/php/7.2/fpm/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
   notify: Restart php
 
+- name: Create /etc/php/7.2/cli/conf.d/25-memcached.ini
+  file: src=/etc/php/7.2/mods-available/memcached.ini dest=/etc/php/7.2/cli/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
+
 - name: Ensure php7.2-fpm state
   service: name=php7.2-fpm state=started

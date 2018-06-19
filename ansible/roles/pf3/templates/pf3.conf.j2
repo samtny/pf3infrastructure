@@ -8,10 +8,13 @@
 
     Alias /pf3/ /var/www/pf3/
 
-    ProxyPassMatch ^/pf3/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/pf3/$1
-    #DirectoryIndex /index.php index.php
+    #ProxyPassMatch ^/pf3/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/pf3/$1
+
 
     <Directory /var/www/pf3>
         AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pf3/$1 [L,P]
     </Directory>
 </VirtualHost>
