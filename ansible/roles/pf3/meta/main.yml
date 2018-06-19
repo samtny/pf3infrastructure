@@ -2,3 +2,4 @@
 dependencies:
   - { role: lamp }
   - { role: composer }
+  - { role: memcached }
