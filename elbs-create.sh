@@ -27,6 +27,7 @@ aws elbv2 create-load-balancer --name ${ELB_NAME} --subnets ${SUBNET_IDS} --secu
 ELB_ARN="$(aws elbv2 describe-load-balancers --names ${ELB_NAME} --output text | grep LOADBALANCERS | cut -f6)"
 
 aws elbv2 create-listener --load-balancer-arn ${ELB_ARN} --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=${TARGET_GROUP_ARN}
+#aws elbv2 create-listener --load-balancer-arn ${ELB_ARN} --protocol HTTPS --port 443 --default-actions Type=forward,TargetGroupArn=${TARGET_GROUP_ARN}
 
 echo -e "aws_ElbName:\t$ELB_NAME"
 
