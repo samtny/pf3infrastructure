@@ -35,3 +35,12 @@
 
 - name: Create /home/ubuntu/pf3_backup.sh
   template: src=backup.sh.j2 dest=/home/ubuntu/pf3_backup.sh owner=ubuntu group=ubuntu mode=0755
+
+- name: Create pf3 backup cron job
+  cron: name="pf3 backup cron" hour="12" minute="3" job="/home/ubuntu/pf3_backup.sh >> /home/ubuntu/logs/pf3_backup.sh.log 2>&1"
+
+- name: Create /home/ubuntu/pf3_logrotate.sh
+  template: src=logrotate.sh.j2 dest=/home/ubuntu/pf3_logrotate.sh owner=ubuntu group=ubuntu mode=0755
+
+- name: Create pf3 logrotate cron job
+  cron: name="pf3 logrotate cron" hour="12" minute="10" job="/home/ubuntu/pf3_logrotate.sh"
