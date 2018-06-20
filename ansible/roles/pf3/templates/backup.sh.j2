@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+DB_NAME={{ pf3server_db_name }}
+
+MYSQL_DEFAULTS_FILE=/home/ubuntu/.pf3.my.cnf
+
+BACKUP_DIR={{ pf3server_backup_directory }}
+BACKUP_FILENAME=${DB_NAME}.sql
+BACKUP_FILE=${BACKUP_DIR}/${BACKUP_FILENAME}
+
+BACKUP_DAYS=30
+
+mkdir -p ${BACKUP_DIR}
+
+MYSQLDUMP=$(which mysqldump)
+
+${MYSQLDUMP} --defaults-file=${MYSQL_DEFAULTS_FILE} ${DB_NAME} > ${BACKUP_FILE}
+
+SAVELOG=$(which savelog)
+
+${SAVELOG} -n -c ${BACKUP_DAYS} ${BACKUP_FILE}
+
+exit 0

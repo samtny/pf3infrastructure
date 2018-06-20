@@ -12,13 +12,13 @@ export AWS_DEFAULT_REGION="us-east-1"
 aws logs create-log-stream --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME"
 
 {
-  sudo mkdir -p /home/ubuntu/backups/
-  sudo aws s3 cp s3://{{ project }}-{{ env}}-lamp/home/ubuntu/backups /home/ubuntu/backups/ --recursive
+  sudo mkdir -p {{ pf3server_backup_directory }}/
+  sudo aws s3 cp s3://{{ project }}-{{ env}}-lamp{{ pf3server_backup_directory }} {{ pf3server_backup_directory }}/ --recursive
 } || {
-  aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=ERROR\tFailed to restore /home/ubuntu/backups."
+  aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=ERROR\tFailed to restore {{ pf3server_backup_directory }}."
   exit 1
 }
 
-aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=SUCCESS\tSuccessfully restored /home/ubuntu/backups."
+aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=SUCCESS\tSuccessfully restored {{ pf3server_backup_directory }}."
 
 exit 0

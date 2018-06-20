@@ -12,12 +12,12 @@ export AWS_DEFAULT_REGION="us-east-1"
 /usr/local/bin/aws logs create-log-stream --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME"
 
 {
-  sudo /usr/local/bin/aws s3 sync --storage-class STANDARD_IA /home/ubuntu/backups s3://{{ project }}-{{ env }}-lamp/home/ubuntu/backups/
+  sudo /usr/local/bin/aws s3 sync --storage-class STANDARD_IA {{ pf3server_backup_directory }} s3://{{ project }}-{{ env }}-lamp{{ pf3server_backup_directory }}/
 } || {
-  /usr/local/bin/aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=ERROR\tFailed to backup /home/ubuntu/backups."
+  /usr/local/bin/aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=ERROR\tFailed to backup {{ pf3server_backup_directory }}."
   exit 1
 }
 
-/usr/local/bin/aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=SUCCESS\tSuccessfully backed up /home/ubuntu/backups."
+/usr/local/bin/aws logs put-log-events --log-group-name "$LOG_GROUP_NAME" --log-stream-name "$LOG_STREAM_NAME" --log-events "timestamp=$CURRENT_TIMESTAMP,message=SUCCESS\tSuccessfully backed up {{ pf3server_backup_directory }}."
 
 exit 0

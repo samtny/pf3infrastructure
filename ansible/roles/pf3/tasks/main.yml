@@ -29,3 +29,9 @@
 - name: Enable site vhost
   file: src=../sites-available/pf3.conf dest=/etc/apache2/sites-enabled/pf3.conf state=link owner=root group=root mode=0644
   notify: Restart apache
+
+- name: Create /home/ubuntu/.pf3.my.cnf
+  template: src=.pf3.my.cnf.j2 dest=/home/ubuntu/.pf3.my.cnf owner=root group=root mode=0644
+
+- name: Create /home/ubuntu/pf3_backup.sh
+  template: src=backup.sh.j2 dest=/home/ubuntu/pf3_backup.sh owner=ubuntu group=ubuntu mode=0755

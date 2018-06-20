@@ -6,6 +6,8 @@ pf3server_docroot: /var/www/pf3
 pf3server_ssl: /home/ubuntu/credentials
 pf3server_gamedict_path: /var/www/pinballfinder.org/gamedict.txt
 pf3server_log_directory: /home/ubuntu/logs
+pf3server_backup_directory: /home/ubuntu/backups
+pf3server_home_directory: /home/ubuntu
 
 pf3server_deploy_host: web-prod-lamp
 pf3server_deploy_user: ubuntu
