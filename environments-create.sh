@@ -44,7 +44,7 @@ echo -e "aws_BucketNameLamp:\t$BUCKET_NAME_LAMP"
 
 # instances
 
-INSTANCE_ID_LAMP=$(bash instances-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${SECURITY_GROUP_ID_LAMP} ${SUBNET_ID_PRIVATE} "" ${EC2_INSTANCE_TYPE_LAMP} ${EC2_AMI_LAMP} '--block-device-mappings [{"DeviceName":"/dev/xvdf","Ebs":{"VolumeSize":80}}]' | grep "aws_InstanceId" | cut -f2)
+INSTANCE_ID_LAMP=$(bash instances-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${SECURITY_GROUP_ID_LAMP} ${SUBNET_ID_PRIVATE} "" ${EC2_INSTANCE_TYPE_LAMP} ${EC2_AMI_LAMP} '--block-device-mappings file://lamp_mappings.json' | grep "aws_InstanceId" | cut -f2)
 echo -e "aws_InstanceIdLamp:\t$INSTANCE_ID_LAMP"
 
 # elb target groups
