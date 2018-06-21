@@ -23,11 +23,11 @@
 #  notify: Reload nginx
 
 - name: Create pf3 vhost entry
-  template: src=pf3.conf.j2 dest=/etc/apache2/sites-available/pf3.conf owner=root group=root mode=0644
+  template: src=010-pf3.conf.j2 dest=/etc/apache2/sites-available/010-pf3.conf owner=root group=root mode=0644
   notify: Restart apache
 
 - name: Enable site vhost
-  file: src=../sites-available/pf3.conf dest=/etc/apache2/sites-enabled/pf3.conf state=link owner=root group=root mode=0644
+  file: src=../sites-available/010-pf3.conf dest=/etc/apache2/sites-enabled/010-pf3.conf state=link owner=root group=root mode=0644
   notify: Restart apache
 
 - name: Create /home/ubuntu/.pf3.my.cnf
