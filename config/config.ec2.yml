@@ -1,5 +1,7 @@
 ---
 
+pinballfinder_docroot: /var/www/pinballfinder.org
+
 pf3server_url: www.pinballfinder.org
 pf3server_runmode: production
 pf3server_docroot: /var/www/pf3

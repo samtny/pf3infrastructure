@@ -1,0 +1,20 @@
+---
+- name: Create pinballfinder.org docroot
+  file: path={{ pinballfinder_docroot }} state=directory owner=www-data group=www-data mode=0775
+
+- name: Create pinballfinder database
+  mysql_db: name={{ pinballfinder_db_name }} state=present collation="utf8mb4_general_ci" encoding="utf8mb4"
+
+- name: Create pinballfinder database user
+  mysql_user: name={{ pinballfinder_db_user }} password={{ pinballfinder_db_password }} priv="{{ pinballfinder_db_name }}.*:ALL" state=present
+
+- name: Create 010-pinballfinder vhost
+  template: src=010-pinballfinder.conf.j2 dest=/etc/apache2/sites-available/010-pinballfinder.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Enable 010-pinballfinder vhost
+  file: src=../sites-available/010-pinballfinder.conf dest=/etc/apache2/sites-enabled/010-pinballfinder.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /home/ubuntu/.pf_wp.my.cnf
+  template: src=.pf_wp.my.cnf.j2 dest=/home/ubuntu/.pf_wp.my.cnf owner=ubuntu group=ubuntu mode=0644

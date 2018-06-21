@@ -16,4 +16,4 @@
     - ../config/config.ec2.yml
     - ../credentials.yml
   tags:
-      - lamp
+    - lamp

@@ -1,0 +1,24 @@
+<VirtualHost *:80>
+    ServerName  www.pinballfinder.org
+    ServerAlias pinballfinder.org web-prod-lamp-1869719050.us-east-1.elb.amazonaws.com
+
+    ServerAdmin pinfinderapp@www.pinballfinder.org
+
+    DocumentRoot /var/www/pinballfinder.org
+
+    <Directory /var/www/pinballfinder.org>
+        AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pinballfinder.org/$1 [L,P]
+    </Directory>
+
+    Alias /pf3/ /var/www/pf3/
+
+    <Directory /var/www/pf3>
+        AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pf3/$1 [L,P]
+    </Directory>
+</VirtualHost>

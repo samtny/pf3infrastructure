@@ -2,7 +2,7 @@
 
 set -e
 
-USAGE="Usage: provision.sh [project] [environment] [service]"
+USAGE="Usage: provision.sh [project] [environment] [service] [tags]"
 
 if [ $# -lt 2 ]; then
   echo "$USAGE"
@@ -12,15 +12,21 @@ fi
 PROJECT=$1
 ENVIRONMENT=$2
 SERVICE=$3
+TAGS=$4
 
 [ ! "$PROJECT" = "web" ] && exit 1
 
 LIB_DIR="./lib"
 WORKING_DIR="./working"
 RESOURCE_PREFIX="$PROJECT-$ENVIRONMENT"
-TAGS="$SERVICE"
 
-[ "$TAGS" = "" ] && TAGS=all
+if [ "$TAGS" = "" ]; then
+  if [ "$SERVICE" = "" ]; then
+    TAGS=all
+  else
+    TAGS="$SERVICE"
+  fi
+fi
 
 [ ! -d "$WORKING_DIR" ] && mkdir -p "$WORKING_DIR"
 
