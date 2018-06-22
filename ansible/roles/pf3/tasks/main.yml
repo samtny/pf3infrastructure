@@ -1,4 +1,10 @@
 ---
+- name: Add ubuntu user to www-data group
+  user:
+    name: ubuntu
+    groups: www-data
+    append: yes
+
 - name: Create pf3 docroot
   file: path={{ pf3server_docroot }} state=directory owner=ubuntu group=ubuntu mode=0775
 
