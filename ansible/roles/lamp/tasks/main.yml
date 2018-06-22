@@ -9,7 +9,7 @@
   file: path=/home/ubuntu/logs state=directory owner=ubuntu group=www-data mode=0775
 
 - name: Create backup cron job
-  cron: name="backup cron" hour="12" minute="19" job="/home/ubuntu/backup.sh >> /home/ubuntu/logs/backup.sh.log 2>&1"
+  cron: user="ubuntu" name="backup cron" hour="12" minute="19" job="/home/ubuntu/backup.sh >> /home/ubuntu/logs/backup.sh.log 2>&1"
 
 - name: Create backup log rotation cron job
-  cron: name="backup log rotation cron" hour="13" minute="19" job="/usr/bin/savelog -n -c 30 /home/ubuntu/logs/backup.sh.log > /dev/null 2>&1"
+  cron: user="ubuntu" name="backup log rotation cron" hour="13" minute="19" job="/usr/bin/savelog -n -c 30 /home/ubuntu/logs/backup.sh.log > /dev/null 2>&1"
