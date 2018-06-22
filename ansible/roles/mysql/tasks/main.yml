@@ -3,11 +3,11 @@
   apt: name=mysql-server state=present
 
 - name: Create /etc/mysql/conf.d/mysql.cnf
-  template: src=mysql.cnf dest=/etc/mysql/conf.d/mysql.cnf owner=root group=root mode=0644
+  template: src=mysql.cnf.j2 dest=/etc/mysql/conf.d/mysql.cnf owner=root group=root mode=0644
   notify: Restart mysql
 
 - name: Create /etc/mysql/mysql.conf.d/mysqld.cnf
-  template: src=mysqld.cnf dest=/etc/mysql/mysql.conf.d/mysqld.cnf owner=root group=root mode=0644
+  template: src=mysqld.cnf.j2 dest=/etc/mysql/mysql.conf.d/mysqld.cnf owner=root group=root mode=0644
   notify: Restart mysql
 
 - name: Ensure mysql service state
