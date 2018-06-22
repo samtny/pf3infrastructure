@@ -47,6 +47,8 @@ echo -e "aws_BucketNameLamp:\t$BUCKET_NAME_LAMP"
 INSTANCE_ID_LAMP=$(bash instances-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${SECURITY_GROUP_ID_LAMP} ${SUBNET_ID_PRIVATE} "" ${EC2_INSTANCE_TYPE_LAMP} ${EC2_AMI_LAMP} '--block-device-mappings file://lamp_mappings.json' | grep "aws_InstanceId" | cut -f2)
 echo -e "aws_InstanceIdLamp:\t$INSTANCE_ID_LAMP"
 
+aws ec2 associate-iam-instance-profile --iam-instance-profile Name=${INSTANCE_PROFILE_NAME_LAMP} --instance-id ${INSTANCE_ID_LAMP}
+
 # elb target groups
 
 TARGET_GROUP_ARN_LAMP=$(bash target-groups-create.sh ${PROJECT} ${ENVIRONMENT} lamp ${VPC_ID} ${INSTANCE_ID_LAMP} | grep "aws_TargetGroupArn" | cut -f2)
