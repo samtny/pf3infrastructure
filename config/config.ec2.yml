@@ -3,6 +3,9 @@
 pinballfinder_docroot: /var/www/pinballfinder.org
 pinballfinder_backup_directory: /home/ubuntu/backups
 
+samology_docroot: /var/www/samology.com
+samology_backup_directory: /home/ubuntu/backups
+
 pf3admin_docroot: /var/www/pf3admin
 
 pf3server_url: www.pinballfinder.org

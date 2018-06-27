@@ -13,6 +13,7 @@
     - common
     - pf3
     - pf3admin
+    - samology
   vars_files:
     - ../config/config.ec2.yml
     - ../credentials.yml

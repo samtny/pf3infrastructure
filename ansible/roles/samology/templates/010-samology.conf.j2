@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+    ServerName  www.samology.com
+    ServerAlias samology.com web-prod-lamp-1869719050.us-east-1.elb.amazonaws.com
+
+    ServerAdmin webmaster@www.samology.com
+
+    DocumentRoot {{ samology_docroot }}
+
+    <Directory "{{ samology_docroot }}">
+        AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000{{ samology_docroot }}/$1 [L,P]
+    </Directory>
+</VirtualHost>

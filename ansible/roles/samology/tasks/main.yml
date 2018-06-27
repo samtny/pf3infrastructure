@@ -1,0 +1,26 @@
+---
+- name: Create samology.com docroot
+  file: path={{ samology_docroot }} state=directory owner=www-data group=www-data mode=0775
+
+- name: Create samology database
+  mysql_db: name={{ samology_db_name }} state=present collation="utf8mb4_general_ci" encoding="utf8mb4"
+
+- name: Create samology database user
+  mysql_user: name={{ samology_db_user }} password={{ samology_db_password }} priv="{{ samology_db_name }}.*:ALL" state=present
+
+- name: Create 010-samology vhost
+  template: src=010-samology.conf.j2 dest=/etc/apache2/sites-available/010-samology.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Enable 010-samology vhost
+  file: src=../sites-available/010-samology.conf dest=/etc/apache2/sites-enabled/010-samology.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /home/ubuntu/.samology_db.my.cnf
+  template: src=.samology_db.my.cnf.j2 dest=/home/ubuntu/.samology_db.my.cnf owner=ubuntu group=ubuntu mode=0644
+
+- name: Create /home/ubuntu/samology_backup.sh
+  template: src=backup.sh.j2 dest=/home/ubuntu/samology_backup.sh owner=ubuntu group=ubuntu mode=0755
+
+- name: Create samology backup cron job
+  cron: user="ubuntu" name="samology backup cron" hour="18" minute="20" job="/home/ubuntu/samology_backup.sh >> /home/ubuntu/logs/samology_backup.sh.log 2>&1"
