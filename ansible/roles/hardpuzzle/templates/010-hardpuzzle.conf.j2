@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+    ServerName  www.hardpuzzle.net
+    ServerAlias hardpuzzle.net
+
+    ServerAdmin webmaster@hardpuzzle.net
+
+    DocumentRoot {{ hardpuzzle_docroot }}
+
+    <Directory "{{ hardpuzzle_docroot }}">
+        AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000{{ hardpuzzle_docroot }}/$1 [L,P]
+    </Directory>
+</VirtualHost>

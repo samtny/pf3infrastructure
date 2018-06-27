@@ -1,0 +1,32 @@
+#!/bin/bash
+
+set -e
+
+DB_NAME={{ hardpuzzle_db_name }}
+
+MYSQL_DEFAULTS_FILE=/home/ubuntu/.hardpuzzle_db.my.cnf
+
+BACKUP_DIR={{ hardpuzzle_backup_directory }}
+BACKUP_FILENAME=${DB_NAME}.sql
+BACKUP_FILE=${BACKUP_DIR}/${BACKUP_FILENAME}
+
+BACKUP_DAYS=15
+
+mkdir -p ${BACKUP_DIR}
+
+MYSQLDUMP=$(which mysqldump)
+
+SAVELOG=$(which savelog)
+
+${SAVELOG} -n -c ${BACKUP_DAYS} ${BACKUP_FILE}
+
+${MYSQLDUMP} --defaults-file=${MYSQL_DEFAULTS_FILE} ${DB_NAME} > ${BACKUP_FILE}
+
+BACKUP_FILENAME=hardpuzzle.tar.gz
+BACKUP_FILE=${BACKUP_DIR}/${BACKUP_FILENAME}
+
+${SAVELOG} -n -c ${BACKUP_DAYS} ${BACKUP_FILE}
+
+tar -zcvf ${BACKUP_FILE} {{ hardpuzzle_docroot }}
+
+exit 0

@@ -1,0 +1,26 @@
+---
+- name: Create hardpuzzle.net docroot
+  file: path={{ hardpuzzle_docroot }} state=directory owner=www-data group=www-data mode=0775
+
+- name: Create hardpuzzle database
+  mysql_db: name={{ hardpuzzle_db_name }} state=present collation="utf8mb4_general_ci" encoding="utf8mb4"
+
+- name: Create hardpuzzle database user
+  mysql_user: name={{ hardpuzzle_db_user }} password={{ hardpuzzle_db_password }} priv="{{ hardpuzzle_db_name }}.*:ALL" state=present
+
+- name: Create 010-hardpuzzle vhost
+  template: src=010-hardpuzzle.conf.j2 dest=/etc/apache2/sites-available/010-hardpuzzle.conf owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Enable 010-hardpuzzle vhost
+  file: src=../sites-available/010-hardpuzzle.conf dest=/etc/apache2/sites-enabled/010-hardpuzzle.conf state=link owner=root group=root mode=0644
+  notify: Restart apache
+
+- name: Create /home/ubuntu/.hardpuzzle_db.my.cnf
+  template: src=.hardpuzzle_db.my.cnf.j2 dest=/home/ubuntu/.hardpuzzle_db.my.cnf owner=ubuntu group=ubuntu mode=0644
+
+- name: Create /home/ubuntu/hardpuzzle_backup.sh
+  template: src=backup.sh.j2 dest=/home/ubuntu/hardpuzzle_backup.sh owner=ubuntu group=ubuntu mode=0755
+
+- name: Create hardpuzzle backup cron job
+  cron: user="ubuntu" name="hardpuzzle backup cron" hour="18" minute="20" job="/home/ubuntu/hardpuzzle_backup.sh >> /home/ubuntu/logs/hardpuzzle_backup.sh.log 2>&1"

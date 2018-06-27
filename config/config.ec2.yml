@@ -6,6 +6,9 @@ pinballfinder_backup_directory: /home/ubuntu/backups
 samology_docroot: /var/www/samology.com
 samology_backup_directory: /home/ubuntu/backups
 
+hardpuzzle_docroot: /var/www/hardpuzzle.net
+hardpuzzle_backup_directory: /home/ubuntu/backups
+
 pf3admin_docroot: /var/www/pf3admin
 
 pf3server_url: www.pinballfinder.org
