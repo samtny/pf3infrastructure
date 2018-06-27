@@ -6,12 +6,7 @@
 
     DocumentRoot /var/www/pinballfinder.org
 
-    <Directory /var/www/pinballfinder.org>
-        AllowOverride All
-        RewriteEngine On
-        RewriteOptions InheritBefore
-        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pinballfinder.org/$1 [L,P]
-    </Directory>
+    Alias /pf3/admin /var/www/pf3admin/
 
     Alias /pf3/ /var/www/pf3/
 
@@ -20,5 +15,12 @@
         RewriteEngine On
         RewriteOptions InheritBefore
         RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pf3/$1 [L,P]
+    </Directory>
+
+    <Directory /var/www/pinballfinder.org>
+        AllowOverride All
+        RewriteEngine On
+        RewriteOptions InheritBefore
+        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pinballfinder.org/$1 [L,P]
     </Directory>
 </VirtualHost>

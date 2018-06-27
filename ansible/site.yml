@@ -12,6 +12,7 @@
   roles:
     - common
     - pf3
+    - pf3admin
   vars_files:
     - ../config/config.ec2.yml
     - ../credentials.yml

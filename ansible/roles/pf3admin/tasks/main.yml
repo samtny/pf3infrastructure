@@ -1,0 +1,3 @@
+---
+- name: Create pf3admin docroot
+  file: path={{ pf3admin_docroot }} state=directory owner=ubuntu group=ubuntu mode=0775

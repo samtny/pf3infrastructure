@@ -8,8 +8,8 @@
 - name: Create pf3 docroot
   file: path={{ pf3server_docroot }} state=directory owner=ubuntu group=ubuntu mode=0775
 
-- name: Create pf3 private
-  file: path={{ pf3server_ssl }} state=directory owner=ubuntu group=ubuntu mode=0700
+- name: Create pf3 ssl
+  file: path={{ pf3server_ssl }} state=directory owner=ubuntu group=www-data mode=0740
 
 - name: Create pf3 database
   mysql_db: name={{ pf3server_db_name }} state=present collation="utf8mb4_general_ci" encoding="utf8mb4"
