@@ -3,10 +3,12 @@
 pinballfinder_docroot: /var/www/pinballfinder.org
 pinballfinder_backup_directory: /home/ubuntu/backups
 
+pf3admin_docroot: /var/www/pf3admin
+
 pf3server_url: www.pinballfinder.org
 pf3server_runmode: production
 pf3server_docroot: /var/www/pf3
-pf3server_ssl: /home/ubuntu/credentials
+pf3server_ssl: /home/ubuntu/ssl/pf3
 pf3server_gamedict_path: /var/www/pinballfinder.org/gamedict.txt
 pf3server_log_directory: /home/ubuntu/logs
 pf3server_backup_directory: /home/ubuntu/backups
