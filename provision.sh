@@ -2,17 +2,24 @@
 
 set -e
 
-USAGE="Usage: provision.sh [project] [environment] [service] [tags]"
+USAGE="Usage: provision.sh [config] [project] [environment] [service] [tags]"
 
-if [ $# -lt 2 ]; then
+if [ $# -lt 3 ]; then
   echo "$USAGE"
   exit 1
 fi
 
-PROJECT=$1
-ENVIRONMENT=$2
-SERVICE=$3
-TAGS=$4
+CONFIG=$1
+PROJECT=$2
+ENVIRONMENT=$3
+SERVICE=$4
+TAGS=$5
+
+CONFIG_FILE=./config/config.${CONFIG}.yml
+
+[ ! -f "${CONFIG_FILE}" ] && echo -e "Invalid config specified, exiting..." && exit 1
+
+cp "${CONFIG_FILE}" ./config.yml
 
 [ ! "$PROJECT" = "web" ] && exit 1
 

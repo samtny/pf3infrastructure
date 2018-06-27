@@ -14,8 +14,9 @@
     - pf3
     - pf3admin
     - samology
+    - hardpuzzle
   vars_files:
-    - ../config/config.ec2.yml
+    - ../config.yml
     - ../credentials.yml
   tags:
     - lamp
