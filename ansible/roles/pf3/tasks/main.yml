@@ -17,6 +17,9 @@
 - name: Create pf3 database user
   mysql_user: name={{ pf3server_db_user }} password={{ pf3server_db_password }} priv="{{ pf3server_db_name }}.*:ALL" state=present
 
+- name: Create {{ pf3server_docroot }}/credentials.yml
+  template: src=credentials.yml.j2 dest={{ pf3server_docroot }}/credentials.yml owner=ubuntu group=www-data mode=0640
+
 - name: Create pf3 cache folder
   file: path={{ pf3server_docroot }}/cache state=directory owner=ubuntu group=www-data mode=0775
 
