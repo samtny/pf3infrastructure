@@ -1,0 +1,9 @@
+# See: https://aws.amazon.com/premiumsupport/knowledge-center/apache-backend-elb/
+
+Timeout 120
+KeepAlive On
+KeepAliveTimeout 120
+MaxKeepAliveRequests 100
+AcceptFilter http none
+AcceptFilter https none
+LogFormat "%{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %b %D \"%{Referer}i\" \"%{User-Agent}i\"" combined
