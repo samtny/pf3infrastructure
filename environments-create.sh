@@ -56,7 +56,7 @@ echo -e "aws_TargetGroupArnLamp:\t$TARGET_GROUP_ARN_LAMP"
 
 # elbs
 
-ELB_NAME_LAMP=$(bash elbs-create.sh ${PROJECT} ${ENVIRONMENT} lamp "${SUBNET_ID_PUBLIC_ALT} ${SUBNET_ID_PRIVATE}" ${SECURITY_GROUP_ID_ELB} ${TARGET_GROUP_ARN_LAMP} | grep "aws_ElbName" | cut -f2)
+ELB_NAME_LAMP=$(bash elbs-create.sh ${PROJECT} ${ENVIRONMENT} lamp "${SUBNET_ID_PUBLIC} ${SUBNET_ID_PUBLIC_ALT}" ${SECURITY_GROUP_ID_ELB} ${TARGET_GROUP_ARN_LAMP} | grep "aws_ElbName" | cut -f2)
 echo -e "aws_ElbNameLamp:\t$ELB_NAME_LAMP"
 
 # wait for NAT
