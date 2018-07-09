@@ -8,8 +8,11 @@
 
     <Directory "{{ samology_docroot }}">
         AllowOverride All
-        RewriteEngine On
-        RewriteOptions InheritBefore
-        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000{{ samology_docroot }}/$1 [L,P]
+    </Directory>
+
+    <Directory "{{ samology_docroot }}/multimedia">
+        Options Indexes MultiViews
+        AllowOverride None
+        Require all granted
     </Directory>
 </VirtualHost>
