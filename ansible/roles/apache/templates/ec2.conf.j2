@@ -7,3 +7,9 @@ MaxKeepAliveRequests 100
 AcceptFilter http none
 AcceptFilter https none
 LogFormat "%{X-Forwarded-For}i %h %l %u %t \"%r\" %>s %b %D \"%{Referer}i\" \"%{User-Agent}i\"" combined
+
+# See: https://stackoverflow.com/questions/30702490/how-to-fix-wordpress-https-issues-when-behind-an-amazon-load-balancer
+
+<IfModule mod_setenvif.c>
+  SetEnvIf X-Forwarded-Proto "^https$" HTTPS
+</IfModule>

@@ -6,10 +6,6 @@
 
     DocumentRoot {{ hardpuzzle_docroot }}
 
-    <IfModule mod_setenvif.c>
-      SetEnvIf X-Forwarded-Proto "^https$" HTTPS
-    </IfModule>
-
     <Directory "{{ hardpuzzle_docroot }}">
         AllowOverride All
         RewriteEngine On
