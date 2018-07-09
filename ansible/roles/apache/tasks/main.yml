@@ -67,6 +67,7 @@
     - deflate
     - expires
     - headers
+    - setenvif
 
   notify: Restart apache
 
