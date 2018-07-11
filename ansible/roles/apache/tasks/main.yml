@@ -68,6 +68,7 @@
     - expires
     - headers
     - setenvif
+    - cgid
 
   notify: Restart apache
 

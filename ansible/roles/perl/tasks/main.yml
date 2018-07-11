@@ -1,0 +1,6 @@
+---
+- name: Install perl
+  apt: name={{ item }} state=present
+  with_items:
+    - libapache-dbi-perl
+    - libdbd-mysql-perl
