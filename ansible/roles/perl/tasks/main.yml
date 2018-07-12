@@ -4,3 +4,15 @@
   with_items:
     - libapache-dbi-perl
     - libdbd-mysql-perl
+
+#- name: Download perlbrew installer
+#  get_url:
+
+#- name: Create /opt/perlbrew
+#  ...
+
+#- name: Install perlbrew
+#  environment:
+#    PERLBREW_ROOT: "/opt/perlbrew"
+
+#- name: Install perl 5.22.0

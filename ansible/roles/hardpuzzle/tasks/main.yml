@@ -22,5 +22,11 @@
 - name: Create /home/ubuntu/hardpuzzle_backup.sh
   template: src=backup.sh.j2 dest=/home/ubuntu/hardpuzzle_backup.sh owner=ubuntu group=ubuntu mode=0755
 
+- name: Create /home/ubuntu/hardpuzzle_logrotate.sh
+  template: src=logrotate.sh.j2 dest=/home/ubuntu/hardpuzzle_logrotate.sh owner=ubuntu group=ubuntu mode=0755
+
 - name: Create hardpuzzle backup cron job
   cron: user="ubuntu" name="hardpuzzle backup cron" hour="18" minute="20" job="/home/ubuntu/hardpuzzle_backup.sh >> /home/ubuntu/logs/hardpuzzle_backup.sh.log 2>&1"
+
+- name: Create hardpuzzle logrotate cron job
+  cron: user="ubuntu" name="hardpuzzle logrotate cron" hour="19" minute="3" job="/home/ubuntu/hardpuzzle_logrotate.sh"

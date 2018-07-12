@@ -38,8 +38,9 @@
 - name: Create pf3 scrape cron job
   cron: user="ubuntu" name="pf3 scrape cron" hour="19" minute="2" job="/home/ubuntu/pf3_scrape.sh >> /home/ubuntu/logs/pf3_scrape.log 2>&1"
 
+- name: Create pf3 backup cron job
+  cron: user="ubuntu" name="pf3 backup cron" hour="19" minute="12" job="/home/ubuntu/pf3_backup.sh >> /home/ubuntu/logs/pf3_backup.sh.log 2>&1"
+
 - name: Create pf3 logrotate cron job
   cron: user="ubuntu" name="pf3 logrotate cron" hour="19" minute="3" job="/home/ubuntu/pf3_logrotate.sh"
 
-- name: Create pf3 backup cron job
-  cron: user="ubuntu" name="pf3 backup cron" hour="19" minute="12" job="/home/ubuntu/pf3_backup.sh >> /home/ubuntu/logs/pf3_backup.sh.log 2>&1"
