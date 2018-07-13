@@ -45,6 +45,8 @@ PORT_HTTP=80
 PORT_HTTPS=443
 PORT_SMTP=25
 PORT_SMTP_TLS=587
+PORT_APNS=2195
+PORT_APNS_FEEDBACK=2196
 
 TAGS="Key=Project,Value=${PROJECT} Key=Name,Value=${PROJECT}"
 
@@ -156,6 +158,9 @@ aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --cidr ${CI
 aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --source-group ${SECGRP_ID_LAMP} --protocol tcp --port ${PORT_SMTP} >/dev/null
 aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --source-group ${SECGRP_ID_LAMP} --protocol tcp --port ${PORT_SMTP_TLS} >/dev/null
 
+aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --source-group ${SECGRP_ID_LAMP} --protocol tcp --port ${PORT_APNS} >/dev/null
+aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --source-group ${SECGRP_ID_LAMP} --protocol tcp --port ${PORT_APNS_FEEDBACK} >/dev/null
+
 # allow misc ports "out" through NAT
 aws ec2 authorize-security-group-ingress --group-id ${SECGRP_ID_NAT} --source-group ${SECGRP_ID_LAMP} --protocol tcp --port 8080 >/dev/null
 
@@ -169,6 +174,8 @@ aws ec2 authorize-security-group-egress --port ${PORT_HTTP} --protocol tcp --cid
 aws ec2 authorize-security-group-egress --port ${PORT_HTTPS} --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
 aws ec2 authorize-security-group-egress --port ${PORT_SMTP} --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
 aws ec2 authorize-security-group-egress --port ${PORT_SMTP_TLS} --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
+aws ec2 authorize-security-group-egress --port ${PORT_APNS} --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
+aws ec2 authorize-security-group-egress --port ${PORT_APNS_FEEDBACK} --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
 aws ec2 authorize-security-group-egress --port 8080 --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
 aws ec2 authorize-security-group-egress --port 8081 --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
 aws ec2 authorize-security-group-egress --port 8153 --protocol tcp --cidr ${CIDR_BLOCK_WORLD} --group-id ${SECGRP_ID_NAT} >/dev/null
