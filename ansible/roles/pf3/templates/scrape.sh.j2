@@ -4,7 +4,7 @@ set -e
 
 PHP=$(which php)
 
-${PHP} -d allow_url_fopen=On -d display_errors {{ pf3server_docroot }}/scrape/sources/scrape_pinballmap.php --soft-approve --tidy || true
-${PHP} -d allow_url_fopen=On -d display_errors {{ pf3server_docroot }}/scrape/sources/scrape_pinside.php --soft-approve --tidy --limit=100 || true
+${PHP} -d allow_url_fopen=On -d display_errors {{ pf3server_docroot }}/scrape/sources/scrape_pinballmap.php --auto-approve --tidy || true
+${PHP} -d allow_url_fopen=On -d display_errors {{ pf3server_docroot }}/scrape/sources/scrape_pinside.php --auto-approve --tidy --limit=100 || true
 
 exit 0
