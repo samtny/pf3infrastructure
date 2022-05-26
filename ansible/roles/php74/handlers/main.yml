@@ -1,0 +1,3 @@
+---
+- name: Restart php74
+  service: name=php7.4-fpm state=restarted

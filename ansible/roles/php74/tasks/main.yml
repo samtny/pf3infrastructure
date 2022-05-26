@@ -1,0 +1,45 @@
+---
+- name: Install php74
+  apt: name={{ item }} state=present
+  notify:
+    - Restart php74
+    - Restart apache
+  with_items:
+    - php7.4-fpm
+    - libapache2-mod-php7.4
+    - php7.4-fpm
+    - php7.4-cli
+    - php7.4-curl
+    - php7.4-mysql
+    - php7.4-sqlite3
+    - php7.4-gd
+    - php-pear
+    - php7.4-dev
+    - build-essential
+    - checkinstall
+    - php7.4-mbstring
+    - php7.4-dom
+    - php7.4-memcached
+    - php7.4-igbinary
+
+- name: Ensure php.ini
+  template: src=php.ini.j2 dest=/etc/php/7.4/fpm/php.ini owner=root group=root mode=0644
+  notify: Restart php74
+
+- name: Ensure www.conf
+  template: src=www.conf.j2 dest=/etc/php/7.4/fpm/pool.d/www.conf owner=root group=root mode=0644
+  notify: Restart php74
+
+- name: Create /etc/php/7.4/mods-available/memcached.ini
+  template: src=memcached.ini.j2 dest=/etc/php/7.4/mods-available/memcached.ini owner=root group=root mode=0644
+  notify: Restart php74
+
+- name: Create /etc/php/7.4/fpm/conf.d/25-memcached.ini
+  file: src=/etc/php/7.4/mods-available/memcached.ini dest=/etc/php/7.4/fpm/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
+  notify: Restart php74
+
+- name: Create /etc/php/7.4/cli/conf.d/25-memcached.ini
+  file: src=/etc/php/7.4/mods-available/memcached.ini dest=/etc/php/7.4/cli/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
+
+- name: Ensure php7.4-fpm state
+  service: name=php7.4-fpm state=started
