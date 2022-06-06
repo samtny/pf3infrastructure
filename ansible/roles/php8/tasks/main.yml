@@ -1,0 +1,45 @@
+---
+- name: Install php8
+  apt: name={{ item }} state=present
+  notify:
+    - Restart php8
+    - Restart apache
+  with_items:
+    - php8.0-fpm
+    - libapache2-mod-php8.0
+    - php8.0-fpm
+    - php8.0-cli
+    - php8.0-curl
+    - php8.0-mysql
+    - php8.0-sqlite3
+    - php8.0-gd
+    - php-pear
+    - php8.0-dev
+    - build-essential
+    - checkinstall
+    - php8.0-mbstring
+    - php8.0-dom
+    - php8.0-memcached
+    - php8.0-igbinary
+
+- name: Ensure php.ini
+  template: src=php.ini.j2 dest=/etc/php/8.0/fpm/php.ini owner=root group=root mode=0644
+  notify: Restart php8
+
+- name: Ensure www.conf
+  template: src=www.conf.j2 dest=/etc/php/8.0/fpm/pool.d/www.conf owner=root group=root mode=0644
+  notify: Restart php8
+
+- name: Create /etc/php/8.0/mods-available/memcached.ini
+  template: src=memcached.ini.j2 dest=/etc/php/8.0/mods-available/memcached.ini owner=root group=root mode=0644
+  notify: Restart php8
+
+- name: Create /etc/php/8.0/fpm/conf.d/25-memcached.ini
+  file: src=/etc/php/8.0/mods-available/memcached.ini dest=/etc/php/8.0/fpm/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
+  notify: Restart php8
+
+- name: Create /etc/php/8.0/cli/conf.d/25-memcached.ini
+  file: src=/etc/php/8.0/mods-available/memcached.ini dest=/etc/php/8.0/cli/conf.d/25-memcached.ini state=link owner=root group=root mode=0644
+
+- name: Ensure php8.0-fpm state
+  service: name=php8.0-fpm state=started

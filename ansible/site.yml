@@ -11,7 +11,7 @@
   become: true
   roles:
     - common
-    - php74
+    - php8
     - pf3
     - pf3admin
     - samology
