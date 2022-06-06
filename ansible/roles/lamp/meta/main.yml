@@ -1,5 +1,5 @@
 ---
 dependencies:
-  - { role: php }
+  - { role: php74 }
   - { role: mysql }
   - { role: apache }
