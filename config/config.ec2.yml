@@ -25,10 +25,10 @@ pf3server_deploy_user: ubuntu
 
 pf3server_db_name: pf3_server
 
-php_pm_max_children: 10
-php_pm_start_servers: 3
-php_pm_min_spare_servers: 3
-php_pm_max_spare_servers: 10
+php_pm_max_children: 2
+php_pm_start_servers: 1
+php_pm_min_spare_servers: 1
+php_pm_max_spare_servers: 2
 
 php_fpm_user: www-data
 php_fpm_group: www-data
