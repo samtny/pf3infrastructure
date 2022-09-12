@@ -14,13 +14,18 @@
         AllowOverride All
         RewriteEngine On
         RewriteOptions InheritBefore
-        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pf3/$1 [L,P]
+        # RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pf3/$1 [L,P]
     </Directory>
 
     <Directory /var/www/pinballfinder.org>
         AllowOverride All
         RewriteEngine On
         RewriteOptions InheritBefore
-        RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pinballfinder.org/$1 [L,P]
+        # RewriteRule ^([^\.]+\.php)$ fcgi://127.0.0.1:9000/var/www/pinballfinder.org/$1 [L,P]
     </Directory>
+
+    <FilesMatch \.php$>
+        SetHandler "proxy:unix:/run/php/php7.4-fpm.sock|fcgi://localhost"
+    </FilesMatch>
+
 </VirtualHost>
